@@ -1,6 +1,6 @@
 // Flipbook State
 let currentPage = 0;
-const totalPages = 48;
+const totalPages = 48; // 1 cover + 46 inside pages + 1 back cover
 
 // DOM Elements
 const leftPageImg = document.getElementById('left-page-img');
@@ -24,20 +24,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Update page display
 function updatePages() {
-    // Left page (even, starting at 0)
-    const leftPageNum = Math.floor(currentPage / 2) * 2;
-    leftPageImg.src = `pages/page-${String(leftPageNum).padStart(3, '0')}.jpg`;
-    
-    // Right page (odd)
-    const rightPageNum = leftPageNum + 1;
-    rightPageImg.src = `pages/page-${String(rightPageNum).padStart(3, '0')}.jpg`;
-    
-    // Update counter (display as 1-indexed)
-    const displayPage = Math.floor(currentPage / 2) + 1;
-    currentPageSpan.textContent = displayPage;
+    // Page 0 (cover) - single page
+    if (currentPage === 0) {
+        leftPageImg.style.display = 'flex';
+        rightPageImg.style.display = 'none';
+        leftPageImg.src = `pages/page-000.jpg`;
+        currentPageSpan.textContent = '1';
+    }
+    // Page 47 (back cover) - single page
+    else if (currentPage === 47) {
+        leftPageImg.style.display = 'none';
+        rightPageImg.style.display = 'flex';
+        rightPageImg.src = `pages/page-047.jpg`;
+        currentPageSpan.textContent = '48';
+    }
+    // Pages 1-46 (two-page spreads)
+    else {
+        leftPageImg.style.display = 'flex';
+        rightPageImg.style.display = 'flex';
+        leftPageImg.src = `pages/page-${String(currentPage).padStart(3, '0')}.jpg`;
+        rightPageImg.src = `pages/page-${String(currentPage + 1).padStart(3, '0')}.jpg`;
+        currentPageSpan.textContent = currentPage + 1;
+    }
     
     // Update slider
-    pageSlider.value = Math.floor(currentPage / 2);
+    pageSlider.value = currentPage;
     
     // Update button states
     updateButtonStates();
@@ -45,27 +56,39 @@ function updatePages() {
 
 // Update button disabled states
 function updateButtonStates() {
-    const spread = Math.floor(currentPage / 2);
-    const maxSpreads = Math.ceil(totalPages / 2);
-    
-    prevButton.disabled = spread === 0;
-    nextButton.disabled = spread === maxSpreads - 1;
+    prevButton.disabled = currentPage === 0;
+    nextButton.disabled = currentPage === totalPages - 1;
 }
 
 // Navigation functions
 function previousPage() {
-    const spread = Math.floor(currentPage / 2);
-    if (spread > 0) {
-        currentPage = (spread - 1) * 2;
+    if (currentPage > 0) {
+        // If on back cover (47), go to page 46
+        if (currentPage === 47) {
+            currentPage = 46;
+        } else if (currentPage === 1) {
+            // If on page 1, go to cover (0)
+            currentPage = 0;
+        } else {
+            // Otherwise go back 2 pages
+            currentPage -= 2;
+        }
         updatePages();
     }
 }
 
 function nextPage() {
-    const spread = Math.floor(currentPage / 2);
-    const maxSpreads = Math.ceil(totalPages / 2);
-    if (spread < maxSpreads - 1) {
-        currentPage = (spread + 1) * 2;
+    if (currentPage < totalPages - 1) {
+        // If on cover (0), go to page 1
+        if (currentPage === 0) {
+            currentPage = 1;
+        } else if (currentPage === 46) {
+            // If on page 46, go to back cover (47)
+            currentPage = 47;
+        } else {
+            // Otherwise go forward 2 pages
+            currentPage += 2;
+        }
         updatePages();
     }
 }
@@ -76,7 +99,7 @@ function attachEventListeners() {
     nextButton.addEventListener('click', nextPage);
     
     pageSlider.addEventListener('input', (e) => {
-        currentPage = parseInt(e.target.value) * 2;
+        currentPage = parseInt(e.target.value);
         updatePages();
     });
     
@@ -128,7 +151,7 @@ function submitQuestion(e) {
     qnaData.push(newQuestion);
     localStorage.setItem('rocketprep_qna', JSON.stringify(qnaData));
     
-    showMessage('✓ Question submitted! It will appear after review.', 'success');
+    showMessage('✓ Question submitted! Thank you for your interest!', 'success');
     qnaForm.reset();
     
     // Reload Q&A display
@@ -145,7 +168,7 @@ function loadQnA() {
     const approvedQnA = qnaData.filter(item => item.approved);
     
     if (approvedQnA.length === 0) {
-        qnaList.innerHTML = '<div class="empty-state">No Q&A yet. Be the first to ask!</div>';
+        qnaList.innerHTML = '<div class="empty-state">No questions yet. Be the first to ask!</div>';
         return;
     }
     
@@ -181,34 +204,3 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
-
-// Sample Q&A for demo
-function initializeSampleQnA() {
-    const existing = localStorage.getItem('rocketprep_qna');
-    if (!existing) {
-        const sampleQnA = [
-            {
-                id: 1,
-                name: 'Alex',
-                email: 'alex@example.com',
-                question: 'What inspired RocketPrep.Comic?',
-                answer: 'Great question! It started as a fun idea to combine action and humor in a unique way.',
-                timestamp: new Date().toLocaleString(),
-                approved: true
-            },
-            {
-                id: 2,
-                name: 'Casey',
-                email: 'casey@example.com',
-                question: 'When will the next comic be released?',
-                answer: 'We\'re working on it! Stay tuned for updates.',
-                timestamp: new Date().toLocaleString(),
-                approved: true
-            }
-        ];
-        localStorage.setItem('rocketprep_qna', JSON.stringify(sampleQnA));
-    }
-}
-
-// Initialize sample Q&A on first visit
-initializeSampleQnA();
