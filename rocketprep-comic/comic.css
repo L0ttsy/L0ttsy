@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -5,66 +7,115 @@
 }
 
 :root {
-    --primary-dark: #0a1f2e;
-    --secondary-dark: #1a3a4a;
-    --teal: #16a085;
-    --teal-light: #48c9b0;
-    --purple: #8e44ad;
-    --purple-light: #af7ac5;
-    --red: #e74c3c;
-    --orange: #e67e22;
-    --seafoam: #1abc9c;
-    --royal-blue: #3498db;
-    --lime: #2ecc71;
-    --text-light: #ecf0f1;
-    --text-muted: #bdc3c7;
+    --primary-dark: #0a1520;
+    --secondary-dark: #0f1f2e;
+    --teal-victorian: #2d5a6f;
+    --teal-light: #5a8fa3;
+    --purple: #7b5b7e;
+    --purple-light: #a88fa0;
+    --red: #c74541;
+    --orange: #d8804d;
+    --seafoam: #4a9b8a;
+    --royal-blue: #3b5f8a;
+    --lime: #6fa876;
+    --cream: #f5f1e8;
+    --text-light: #e8e4d8;
+    --text-muted: #a89f91;
+    --sci-fi-blue: #00d9ff;
+    --sci-fi-purple: #ff00ff;
+    --sci-fi-grid: #1a3a4a;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'EB Garamond', serif;
     background-color: var(--primary-dark);
     color: var(--text-light);
+    font-size: 16px;
+    letter-spacing: 0.3px;
+}
+
+/* Monospace font for RocketPrep.Comic references */
+.rocket-prep-font {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 /* Header */
 .comic-header {
-    background: linear-gradient(135deg, var(--secondary-dark), var(--purple));
-    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, var(--secondary-dark), var(--sci-fi-grid));
+    padding: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 3px solid var(--teal);
+    border-bottom: 4px solid var(--sci-fi-blue);
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1.5rem;
+    box-shadow: inset 0 1px 0 rgba(0, 217, 255, 0.1), 0 0 20px rgba(0, 217, 255, 0.1);
+    position: relative;
+}
+
+.comic-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 217, 255, 0.03) 0px,
+        transparent 1px,
+        transparent 2px,
+        rgba(0, 217, 255, 0.03) 3px
+    );
+    pointer-events: none;
+    z-index: 1;
 }
 
 .back-button {
-    color: var(--teal-light);
+    color: var(--sci-fi-blue);
     text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    font-style: italic;
+    position: relative;
+    z-index: 2;
 }
 
 .back-button:hover {
-    color: var(--lime);
+    color: var(--sci-fi-purple);
+    text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
 }
 
 .comic-header h1 {
     flex: 1;
     text-align: center;
-    background: linear-gradient(135deg, var(--red), var(--orange));
+    background: linear-gradient(135deg, var(--sci-fi-blue), var(--sci-fi-purple));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    font-size: 2rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 2;
 }
 
 .page-counter {
-    background-color: var(--teal);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-weight: bold;
-    color: var(--primary-dark);
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(255, 0, 255, 0.1));
+    padding: 0.6rem 1.2rem;
+    border-radius: 0;
+    font-weight: 600;
+    color: var(--sci-fi-blue);
+    font-style: italic;
+    border: 2px solid var(--sci-fi-blue);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2;
+    box-shadow: inset 0 0 10px rgba(0, 217, 255, 0.1);
 }
 
 /* Comic Container */
@@ -78,55 +129,79 @@ body {
 .flipbook-wrapper {
     display: flex;
     justify-content: center;
-    margin: 2rem 0;
+    margin: 3rem 0;
     perspective: 1000px;
 }
 
 .book {
     display: flex;
     background: linear-gradient(135deg, var(--secondary-dark), var(--primary-dark));
-    border-radius: 10px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    padding: 1rem;
+    border-radius: 2px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(0, 217, 255, 0.1), 0 0 30px rgba(0, 217, 255, 0.15);
+    padding: 1.5rem;
     max-width: 900px;
     width: 100%;
+    border: 3px solid var(--sci-fi-blue);
+    position: relative;
+}
+
+.book::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 217, 255, 0.02) 0px,
+        transparent 1px,
+        transparent 2px,
+        rgba(0, 217, 255, 0.02) 3px
+    );
+    pointer-events: none;
+    border-radius: 2px;
 }
 
 .book-spine-left,
 .book-spine-right {
-    width: 15px;
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), transparent);
-    border-radius: 5px;
+    width: 18px;
+    background: linear-gradient(90deg, rgba(0, 217, 255, 0.2), transparent);
+    border-radius: 2px;
 }
 
 .book-spine-right {
-    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.5));
+    background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.2));
 }
 
 .pages-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 1.5rem;
     flex: 1;
     align-items: center;
+    position: relative;
+    z-index: 2;
 }
 
 .page {
-    background: white;
-    border-radius: 3px;
+    background: var(--cream);
+    border-radius: 2px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 217, 255, 0.2);
     aspect-ratio: 9 / 12;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
     position: relative;
+    border: 2px solid var(--sci-fi-blue);
 }
 
 .page:hover {
     transform: scale(1.02);
+    box-shadow: 0 12px 30px rgba(0, 217, 255, 0.4);
 }
 
 .page img {
@@ -143,7 +218,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.1), transparent);
+    background: linear-gradient(90deg, rgba(0, 217, 255, 0.08), transparent);
     pointer-events: none;
     z-index: 1;
 }
@@ -155,7 +230,7 @@ body {
     right: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1));
+    background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.08));
     pointer-events: none;
     z-index: 1;
 }
@@ -166,25 +241,30 @@ body {
     justify-content: center;
     align-items: center;
     gap: 2rem;
-    margin: 2rem 0;
+    margin: 2.5rem 0;
     flex-wrap: wrap;
 }
 
 .nav-button {
-    padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, var(--teal), var(--seafoam));
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-weight: bold;
+    padding: 0.8rem 1.8rem;
+    background: linear-gradient(135deg, var(--sci-fi-blue), var(--sci-fi-purple));
+    color: var(--primary-dark);
+    border: 2px solid var(--sci-fi-blue);
+    border-radius: 0;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 1rem;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.3), inset 0 0 10px rgba(0, 217, 255, 0.1);
+    text-transform: uppercase;
 }
 
 .nav-button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(22, 160, 133, 0.4);
+    box-shadow: 0 0 25px rgba(0, 217, 255, 0.6), inset 0 0 15px rgba(0, 217, 255, 0.2);
+    background: linear-gradient(135deg, var(--sci-fi-purple), var(--sci-fi-blue));
 }
 
 .nav-button:active {
@@ -192,7 +272,7 @@ body {
 }
 
 .nav-button:disabled {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: not-allowed;
     transform: none;
 }
@@ -206,61 +286,94 @@ body {
 
 .page-slider {
     width: 100%;
-    height: 6px;
+    height: 8px;
     background: var(--secondary-dark);
-    border-radius: 5px;
+    border-radius: 0;
     outline: none;
     -webkit-appearance: none;
     appearance: none;
+    border: 2px solid var(--sci-fi-blue);
+    box-shadow: inset 0 0 10px rgba(0, 217, 255, 0.1);
 }
 
 .page-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 20px;
-    height: 20px;
-    background: linear-gradient(135deg, var(--red), var(--orange));
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, var(--sci-fi-blue), var(--sci-fi-purple));
     cursor: pointer;
-    border-radius: 50%;
-    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+    border-radius: 0;
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.6);
+    border: 2px solid var(--sci-fi-purple);
 }
 
 .page-slider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    background: linear-gradient(135deg, var(--red), var(--orange));
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, var(--sci-fi-blue), var(--sci-fi-purple));
     cursor: pointer;
-    border-radius: 50%;
-    border: none;
-    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+    border-radius: 0;
+    border: 2px solid var(--sci-fi-purple);
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.6);
 }
 
 .nav-info {
     text-align: center;
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     margin-bottom: 2rem;
+    font-style: italic;
+    letter-spacing: 0.5px;
 }
 
 /* Q&A Section */
 .qna-section {
     background-color: var(--secondary-dark);
-    padding: 3rem 2rem;
+    padding: 3.5rem 2rem;
     margin: 3rem 0 0 0;
-    border-top: 3px solid var(--purple);
+    border-top: 4px solid var(--sci-fi-blue);
+    position: relative;
+}
+
+.qna-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 217, 255, 0.03) 0px,
+        transparent 1px,
+        transparent 2px,
+        rgba(0, 217, 255, 0.03) 3px
+    );
+    pointer-events: none;
 }
 
 .qna-section h2 {
     text-align: center;
-    font-size: 2rem;
+    font-size: 2.2rem;
     margin-bottom: 0.5rem;
-    color: var(--purple-light);
+    color: var(--sci-fi-blue);
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
 }
 
 .qna-section > p {
     text-align: center;
     color: var(--text-muted);
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    font-style: italic;
+    font-size: 1.05rem;
+    position: relative;
+    z-index: 1;
 }
 
 .qna-container {
@@ -268,40 +381,55 @@ body {
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 2.5rem;
+    position: relative;
+    z-index: 1;
 }
 
 /* Q&A Form */
 .qna-form {
     background-color: var(--primary-dark);
-    padding: 2rem;
-    border-radius: 10px;
-    border-left: 4px solid var(--lime);
+    padding: 2.5rem;
+    border-radius: 0;
+    border: 2px solid var(--sci-fi-blue);
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.2), inset 0 0 10px rgba(0, 217, 255, 0.05);
 }
 
 .qna-form h3 {
-    color: var(--lime);
+    color: var(--sci-fi-blue);
     margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .form-input,
 .form-textarea {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.9rem;
     margin-bottom: 1rem;
     background-color: var(--secondary-dark);
-    border: 2px solid var(--teal);
-    border-radius: 5px;
+    border: 2px solid var(--sci-fi-blue);
+    border-radius: 0;
     color: var(--text-light);
-    font-family: inherit;
-    transition: border-color 0.3s ease;
+    font-family: 'EB Garamond', serif;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    box-shadow: inset 0 0 10px rgba(0, 217, 255, 0.05);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: var(--text-muted);
 }
 
 .form-input:focus,
 .form-textarea:focus {
     outline: none;
-    border-color: var(--teal-light);
-    box-shadow: 0 0 10px rgba(22, 160, 133, 0.2);
+    border-color: var(--sci-fi-purple);
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.3), inset 0 0 10px rgba(0, 217, 255, 0.1);
 }
 
 .form-textarea {
@@ -311,19 +439,25 @@ body {
 
 .submit-button {
     width: 100%;
-    padding: 0.75rem;
-    background: linear-gradient(135deg, var(--royal-blue), var(--lime));
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
+    padding: 0.9rem;
+    background: linear-gradient(135deg, var(--sci-fi-blue), var(--sci-fi-purple));
+    color: var(--primary-dark);
+    border: 2px solid var(--sci-fi-purple);
+    border-radius: 0;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-family: 'Courier New', monospace;
+    font-size: 1.05rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
 }
 
 .submit-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+    box-shadow: 0 0 25px rgba(0, 217, 255, 0.6);
+    background: linear-gradient(135deg, var(--sci-fi-purple), var(--sci-fi-blue));
 }
 
 .submit-button:disabled {
@@ -333,37 +467,46 @@ body {
 
 .form-message {
     margin-top: 1rem;
-    padding: 0.75rem;
-    border-radius: 5px;
+    padding: 0.9rem;
+    border-radius: 0;
     text-align: center;
     display: none;
+    font-weight: 500;
 }
 
 .form-message.success {
     display: block;
-    background-color: rgba(46, 204, 113, 0.2);
-    color: var(--lime);
-    border: 1px solid var(--lime);
+    background-color: rgba(0, 217, 255, 0.15);
+    color: var(--sci-fi-blue);
+    border: 2px solid var(--sci-fi-blue);
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
 }
 
 .form-message.error {
     display: block;
-    background-color: rgba(231, 76, 60, 0.2);
+    background-color: rgba(199, 69, 65, 0.15);
     color: var(--red);
-    border: 1px solid var(--red);
+    border: 2px solid var(--red);
+    box-shadow: 0 0 15px rgba(199, 69, 65, 0.2);
 }
 
 /* Q&A Display */
 .qna-display {
     background-color: var(--primary-dark);
-    padding: 2rem;
-    border-radius: 10px;
-    border-left: 4px solid var(--royal-blue);
+    padding: 2.5rem;
+    border-radius: 0;
+    border: 2px solid var(--sci-fi-blue);
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.2), inset 0 0 10px rgba(0, 217, 255, 0.05);
 }
 
 .qna-display h3 {
-    color: var(--royal-blue);
+    color: var(--sci-fi-blue);
     margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .qna-list {
@@ -375,9 +518,12 @@ body {
     background-color: var(--secondary-dark);
     padding: 1.5rem;
     margin-bottom: 1rem;
-    border-radius: 5px;
-    border-left: 3px solid var(--orange);
+    border-radius: 0;
+    border-left: 4px solid var(--sci-fi-purple);
+    border: 2px solid var(--sci-fi-blue);
+    border-left: 4px solid var(--sci-fi-purple);
     animation: slideIn 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 217, 255, 0.1);
 }
 
 @keyframes slideIn {
@@ -392,35 +538,41 @@ body {
 }
 
 .qna-item.answer {
-    border-left-color: var(--seafoam);
+    border-left-color: var(--sci-fi-blue);
     margin-left: 1rem;
 }
 
 .qna-question {
-    font-weight: bold;
-    color: var(--orange);
+    font-weight: 600;
+    color: var(--sci-fi-purple);
     margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+    font-family: 'Courier New', monospace;
 }
 
 .qna-answer {
-    color: var(--seafoam);
+    color: var(--sci-fi-blue);
     margin-bottom: 0.5rem;
+    font-style: italic;
 }
 
 .qna-author {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: var(--text-muted);
+    font-style: italic;
 }
 
 .loading {
     text-align: center;
     color: var(--text-muted);
+    font-style: italic;
 }
 
 .empty-state {
     text-align: center;
     color: var(--text-muted);
     padding: 2rem;
+    font-style: italic;
 }
 
 /* Footer */
@@ -429,19 +581,22 @@ footer {
     padding: 2rem;
     text-align: center;
     color: var(--text-muted);
-    border-top: 2px solid var(--teal);
+    border-top: 4px solid var(--sci-fi-blue);
+    font-style: italic;
+    box-shadow: inset 0 1px 0 rgba(0, 217, 255, 0.1);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
     .comic-header {
         flex-direction: column;
+        padding: 1.5rem;
     }
 
     .comic-header h1 {
         order: -1;
         width: 100%;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
 
     .pages-container {
@@ -449,7 +604,7 @@ footer {
     }
 
     .book {
-        padding: 0.5rem;
+        padding: 0.75rem;
     }
 
     .book-spine-left,
@@ -463,7 +618,9 @@ footer {
 
     .nav-button {
         flex: 1;
-        min-width: 120px;
+        min-width: 100px;
+        font-size: 0.95rem;
+        padding: 0.6rem 1.2rem;
     }
 
     .slider-container {
@@ -476,5 +633,10 @@ footer {
 
     .qna-item.answer {
         margin-left: 0.5rem;
+    }
+
+    .qna-form,
+    .qna-display {
+        padding: 1.5rem;
     }
 }
