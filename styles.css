@@ -27,6 +27,13 @@ body {
     letter-spacing: 0.3px;
 }
 
+/* Monospace font for RocketPrep.Comic references */
+.rocket-prep-font {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
 /* Navigation */
 .navbar {
     background-color: var(--secondary-dark);
