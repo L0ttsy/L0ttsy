@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -5,32 +7,35 @@
 }
 
 :root {
-    --primary-dark: #0a1f2e;
-    --secondary-dark: #1a3a4a;
-    --teal: #16a085;
-    --teal-light: #48c9b0;
-    --purple: #8e44ad;
-    --purple-light: #af7ac5;
-    --accent: #16a085;
-    --text-light: #ecf0f1;
-    --text-muted: #bdc3c7;
+    --primary-dark: #0f2f3f;
+    --secondary-dark: #1a4855;
+    --teal-victorian: #2d5a6f;
+    --teal-light: #5a8fa3;
+    --purple: #7b5b7e;
+    --purple-light: #a88fa0;
+    --accent: #2d5a6f;
+    --cream: #f5f1e8;
+    --text-light: #e8e4d8;
+    --text-muted: #a89f91;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'EB Garamond', serif;
     background-color: var(--primary-dark);
     color: var(--text-light);
-    line-height: 1.6;
+    line-height: 1.7;
+    letter-spacing: 0.3px;
 }
 
 /* Navigation */
 .navbar {
     background-color: var(--secondary-dark);
-    padding: 1rem 0;
+    padding: 1.2rem 0;
     position: sticky;
     top: 0;
     z-index: 100;
-    border-bottom: 2px solid var(--teal);
+    border-bottom: 3px double var(--teal-victorian);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .nav-container {
@@ -43,21 +48,24 @@ body {
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.8rem;
+    font-weight: 700;
     color: var(--teal-light);
+    letter-spacing: 1px;
 }
 
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 2rem;
+    gap: 2.5rem;
 }
 
 .nav-links a {
     color: var(--text-light);
     text-decoration: none;
     transition: color 0.3s ease;
+    font-weight: 500;
+    font-size: 1.05rem;
 }
 
 .nav-links a:hover,
@@ -83,34 +91,41 @@ body {
 }
 
 .hero h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
+    font-size: 3.8rem;
+    margin-bottom: 1.5rem;
     background: linear-gradient(135deg, var(--teal-light), var(--purple-light));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    font-weight: 700;
+    letter-spacing: 2px;
 }
 
 .hero p {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: var(--text-muted);
     margin-bottom: 2rem;
+    font-style: italic;
 }
 
 .cta-button {
     display: inline-block;
-    padding: 0.75rem 2rem;
-    background: linear-gradient(135deg, var(--teal), var(--purple));
-    color: white;
+    padding: 1rem 2.2rem;
+    background: linear-gradient(135deg, var(--teal-victorian), var(--teal-light));
+    color: var(--cream);
     text-decoration: none;
-    border-radius: 50px;
-    font-weight: bold;
+    border-radius: 4px;
+    font-weight: 600;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid var(--teal-light);
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
 }
 
 .cta-button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(22, 160, 133, 0.3);
+    box-shadow: 0 12px 30px rgba(45, 90, 111, 0.35);
+    background: linear-gradient(135deg, var(--teal-light), var(--teal-victorian));
 }
 
 /* Duck animation */
@@ -119,88 +134,100 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
     position: relative;
 }
 
 .duck {
-    font-size: 4rem;
-    animation: duck-float 3s ease-in-out infinite;
+    font-size: 5rem;
+    animation: duck-float 4s ease-in-out infinite;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
 .duck:nth-child(2) {
-    animation-delay: 0.5s;
+    animation-delay: 0.7s;
 }
 
 .duck:nth-child(3) {
-    animation-delay: 1s;
+    animation-delay: 1.4s;
 }
 
 @keyframes duck-float {
     0%, 100% {
-        transform: translateY(0px);
+        transform: translateY(0px) rotate(0deg);
     }
     50% {
-        transform: translateY(-20px);
+        transform: translateY(-25px) rotate(2deg);
     }
 }
 
 /* Projects Section */
 .projects {
-    padding: 4rem 2rem;
+    padding: 4.5rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .projects h2 {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     margin-bottom: 3rem;
     color: var(--teal-light);
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 .project-card {
     background-color: var(--secondary-dark);
-    padding: 2rem;
-    border-radius: 10px;
-    border-left: 4px solid var(--teal);
+    padding: 2.5rem;
+    border-radius: 4px;
+    border-left: 5px solid var(--teal-victorian);
+    border: 3px solid var(--teal-victorian);
+    border-left: 5px solid var(--teal-victorian);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-bottom: 2rem;
 }
 
 .project-card:hover {
     transform: translateX(10px);
-    box-shadow: 0 10px 30px rgba(22, 160, 133, 0.2);
+    box-shadow: 0 12px 35px rgba(45, 90, 111, 0.25);
 }
 
 .project-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .project-header h3 {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     color: var(--teal-light);
+    font-weight: 700;
 }
 
 .badge {
     background-color: var(--purple);
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
+    padding: 0.4rem 1rem;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--cream);
+    border: 1px solid var(--purple-light);
 }
 
 .project-card p {
     color: var(--text-muted);
     margin-bottom: 1.5rem;
+    line-height: 1.8;
+    font-size: 1.05rem;
 }
 
 .project-link {
     color: var(--teal-light);
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
     transition: color 0.3s ease;
+    font-style: italic;
 }
 
 .project-link:hover {
@@ -209,21 +236,25 @@ body {
 
 /* Contact Section */
 .contact {
-    padding: 4rem 2rem;
+    padding: 4.5rem 2rem;
     text-align: center;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .contact h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
     color: var(--teal-light);
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 .contact p {
     color: var(--text-muted);
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    font-style: italic;
+    font-size: 1.1rem;
 }
 
 .contact-links {
@@ -234,26 +265,32 @@ body {
 }
 
 .contact-links a {
-    padding: 0.75rem 1.5rem;
-    border: 2px solid var(--teal);
+    padding: 0.9rem 2rem;
+    border: 2px solid var(--teal-victorian);
     color: var(--teal-light);
     text-decoration: none;
-    border-radius: 50px;
+    border-radius: 4px;
     transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
 }
 
 .contact-links a:hover {
-    background-color: var(--teal);
-    color: var(--primary-dark);
+    background-color: var(--teal-victorian);
+    color: var(--cream);
+    box-shadow: 0 8px 20px rgba(45, 90, 111, 0.3);
+    transform: translateY(-2px);
 }
 
 /* Footer */
 footer {
     background-color: var(--secondary-dark);
-    padding: 2rem;
+    padding: 2.5rem;
     text-align: center;
     color: var(--text-muted);
-    border-top: 2px solid var(--teal);
+    border-top: 3px double var(--teal-victorian);
+    font-style: italic;
 }
 
 /* Responsive */
@@ -271,13 +308,22 @@ footer {
         margin-top: 2rem;
     }
 
+    .duck {
+        font-size: 3.5rem;
+    }
+
     .nav-links {
-        gap: 1rem;
+        gap: 1.5rem;
     }
 
     .project-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
+    }
+
+    .projects h2,
+    .contact h2 {
+        font-size: 2rem;
     }
 }
