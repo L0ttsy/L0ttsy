@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocketPrep.Comic - Flipbook Reader</title>
+    <link rel="stylesheet" href="comic.css">
+</head>
+<body>
+    <div class="comic-container">
+        <!-- Header -->
+        <header class="comic-header">
+            <a href="../index.html" class="back-button">← Back to Home</a>
+            <h1>RocketPrep.Comic 🦆</h1>
+            <div class="page-counter">
+                <span id="current-page">1</span> / <span id="total-pages">48</span>
+            </div>
+        </header>
+
+        <!-- Flipbook -->
+        <div class="flipbook-wrapper">
+            <div class="book">
+                <div class="book-spine-left"></div>
+                
+                <div class="pages-container">
+                    <!-- Left Page -->
+                    <div class="page page-left">
+                        <img id="left-page-img" src="pages/page-000.jpg" alt="Left page">
+                    </div>
+                    
+                    <!-- Right Page -->
+                    <div class="page page-right">
+                        <img id="right-page-img" src="pages/page-001.jpg" alt="Right page">
+                    </div>
+                </div>
+
+                <div class="book-spine-right"></div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button id="prev-button" class="nav-button">← Previous</button>
+            
+            <div class="slider-container">
+                <input type="range" id="page-slider" min="0" max="47" value="0" class="page-slider">
+            </div>
+            
+            <button id="next-button" class="nav-button">Next →</button>
+        </div>
+
+        <!-- Navigation Info -->
+        <div class="nav-info">
+            <p>📖 Use arrow buttons or keyboard arrows to navigate. Drag the slider to jump.</p>
+        </div>
+    </div>
+
+    <!-- Q&A Section -->
+    <section class="qna-section">
+        <h2>Questions & Answers 🦆</h2>
+        <p>Have a question about RocketPrep.Comic? Submit it below!</p>
+        
+        <div class="qna-container">
+            <!-- Question Submission Form -->
+            <div class="qna-form">
+                <h3>Ask a Question</h3>
+                <form id="qna-form">
+                    <input 
+                        type="text" 
+                        id="name" 
+                        placeholder="Your Name" 
+                        required
+                        class="form-input"
+                    >
+                    <input 
+                        type="email" 
+                        id="email" 
+                        placeholder="Your Email" 
+                        required
+                        class="form-input"
+                    >
+                    <textarea 
+                        id="question" 
+                        placeholder="Your Question..." 
+                        required
+                        class="form-textarea"
+                    ></textarea>
+                    <button type="submit" class="submit-button">Submit Question</button>
+                </form>
+                <div id="form-message" class="form-message"></div>
+            </div>
+
+            <!-- Q&A Display -->
+            <div class="qna-display">
+                <h3>Community Questions</h3>
+                <div id="qna-list" class="qna-list">
+                    <p class="loading">Loading Q&A...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Made with 🦆 by L0ttsy | RocketPrep.Comic</p>
+    </footer>
+
+    <script src="comic.js"></script>
+</body>
+</html>
