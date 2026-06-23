@@ -26,16 +26,16 @@ document.addEventListener('DOMContentLoaded', () => {
 function updatePages() {
     // Page 0 (cover) - single page
     if (currentPage === 0) {
-        leftPageImg.style.display = 'flex';
-        rightPageImg.style.display = 'none';
-        leftPageImg.src = `pages/page-000.jpg`;
+        rightPageImg.style.display = 'flex';
+        leftPageImg.style.display = 'none';
+        rightPageImg.src = `pages/page-000.jpg`;
         currentPageSpan.textContent = '1';
     }
     // Page 47 (back cover) - single page
     else if (currentPage === 47) {
-        leftPageImg.style.display = 'none';
-        rightPageImg.style.display = 'flex';
-        rightPageImg.src = `pages/page-047.jpg`;
+        rightPageImg.style.display = 'none';
+        leftPageImg.style.display = 'flex';
+        leftPageImg.src = `pages/page-047.jpg`;
         currentPageSpan.textContent = '48';
     }
     // Pages 1-46 (two-page spreads)
