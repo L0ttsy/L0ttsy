@@ -307,7 +307,7 @@
         }
 
 function loadQuestions() {
-    fetch("http://localhost:3000/questions")
+    fetch("https://charlotte-qna-backend-1.onrender.com/questions")
         .then(res => res.json())
         .then(qnaData => {
             const listDiv = document.getElementById('questionsList');
@@ -342,7 +342,7 @@ function loadQuestions() {
 
 
    function approveQuestion(id) {
-    fetch("http://localhost:3000/approve", {
+    fetch("https://charlotte-qna-backend-1.onrender.com/approve", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id })
@@ -355,7 +355,7 @@ function loadQuestions() {
 function saveAnswer(id) {
     const answerText = document.getElementById(`answer-${id}`).value;
 
-    fetch("http://localhost:3000/answer", {
+    fetch("https://charlotte-qna-backend-1.onrender.com/answer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, answer: answerText })
@@ -369,7 +369,7 @@ function saveAnswer(id) {
 
 function deleteQuestion(id) {
     if (confirm('Are you sure you want to delete this question?')) {
-        fetch("http://localhost:3000/delete", {
+        fetch("https://charlotte-qna-backend-1.onrender.com/delete", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id })
