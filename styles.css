@@ -135,7 +135,7 @@ body {
     background: linear-gradient(135deg, var(--teal-light), var(--teal-victorian));
 }
 
-/* Duck animation */
+/* Duck images */
 .hero-ducks {
     flex: 1;
     display: flex;
@@ -145,17 +145,26 @@ body {
     position: relative;
 }
 
-.duck {
-    font-size: 5rem;
+.duck-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--teal-light);
     animation: duck-float 4s ease-in-out infinite;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    transition: transform 0.3s ease;
 }
 
-.duck:nth-child(2) {
+.duck-img:hover {
+    transform: scale(1.05);
+}
+
+.duck-img:nth-child(2) {
     animation-delay: 0.7s;
 }
 
-.duck:nth-child(3) {
+.duck-img:nth-child(3) {
     animation-delay: 1.4s;
 }
 
@@ -315,8 +324,9 @@ footer {
         margin-top: 2rem;
     }
 
-    .duck {
-        font-size: 3.5rem;
+    .duck-img {
+        width: 100px;
+        height: 100px;
     }
 
     .nav-links {

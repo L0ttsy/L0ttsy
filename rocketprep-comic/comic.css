@@ -34,14 +34,12 @@ body {
     letter-spacing: 0.3px;
 }
 
-/* Monospace font for RocketPrep.Comic references */
 .rocket-prep-font {
     font-family: 'Courier New', monospace;
     font-weight: 700;
     letter-spacing: 1px;
 }
 
-/* Header */
 .comic-header {
     background: linear-gradient(135deg, var(--secondary-dark), var(--sci-fi-grid));
     padding: 2rem;
@@ -118,14 +116,12 @@ body {
     box-shadow: inset 0 0 10px rgba(0, 217, 255, 0.1);
 }
 
-/* Comic Container */
 .comic-container {
     max-width: 1200px;
     margin: 2rem auto;
     padding: 0 1rem;
 }
 
-/* Flipbook */
 .flipbook-wrapper {
     display: flex;
     justify-content: center;
@@ -189,7 +185,7 @@ body {
     border-radius: 2px;
     overflow: hidden;
     box-shadow: 0 8px 20px rgba(0, 217, 255, 0.2);
-    aspect-ratio: auto;
+    aspect-ratio: 9 / 12;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -197,6 +193,7 @@ body {
     transition: all 0.3s ease;
     position: relative;
     border: 2px solid var(--sci-fi-blue);
+    min-height: 400px;
 }
 
 .page:hover {
@@ -235,7 +232,12 @@ body {
     z-index: 1;
 }
 
-/* Controls */
+.page.single-page {
+    grid-column: 1 / -1;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
 .controls {
     display: flex;
     justify-content: center;
@@ -327,7 +329,6 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Q&A Section */
 .qna-section {
     background-color: var(--secondary-dark);
     padding: 3.5rem 2rem;
@@ -386,7 +387,6 @@ body {
     z-index: 1;
 }
 
-/* Q&A Form */
 .qna-form {
     background-color: var(--primary-dark);
     padding: 2.5rem;
@@ -490,7 +490,6 @@ body {
     box-shadow: 0 0 15px rgba(199, 69, 65, 0.2);
 }
 
-/* Q&A Display */
 .qna-display {
     background-color: var(--primary-dark);
     padding: 2.5rem;
@@ -575,7 +574,6 @@ body {
     font-style: italic;
 }
 
-/* Footer */
 footer {
     background-color: var(--secondary-dark);
     padding: 2rem;
@@ -586,7 +584,6 @@ footer {
     box-shadow: inset 0 1px 0 rgba(0, 217, 255, 0.1);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .comic-header {
         flex-direction: column;
@@ -601,6 +598,23 @@ footer {
 
     .pages-container {
         grid-template-columns: 1fr;
+    }
+
+    .page {
+        grid-column: 1;
+    }
+
+    .page.single-page {
+        grid-column: 1;
+    }
+
+    .page-left {
+        display: none !important;
+    }
+
+    .page-right {
+        display: flex !important;
+        grid-column: 1;
     }
 
     .book {

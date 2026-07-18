@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - RocketPrep.Comic Q&A</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #0a1520;
+            --secondary-dark: #0f1f2e;
+            --sci-fi-blue: #00d9ff;
+            --sci-fi-purple: #ff00ff;
+            --text-light: #e8e4d8;
+            --text-muted: #a89f91;
+            --red: #c74541;
+            --lime: #6fa876;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .login-box {
+            background-color: var(--secondary-dark);
+            border: 2px solid var(--sci-fi-blue);
+            padding: 2rem;
+            border-radius: 0;
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-box h1 {
+            color: var(--sci-fi-blue);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--sci-fi-blue);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary-dark);
+            border: 2px solid var(--sci-fi-blue);
+            color: var(--text-light);
+            font-family: 'Courier New', monospace;
+        }
+
+        input[type="password"]:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, var(--sci-fi-blue), var(--sci-fi-purple));
+            color: var(--primary-dark);
+            border: 2px solid var(--sci-fi-purple);
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-family: 'Courier New', monospace;
+            margin-top: 1rem;
+        }
+
+        .login-btn:hover {
+            box-shadow: 0 0 25px rgba(0, 217, 255, 0.6);
+        }
+
+        .admin-panel {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--sci-fi-blue);
+            padding-bottom: 1rem;
+        }
+
+        .admin-header h1 {
+            color: var(--sci-fi-blue);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logout-btn {
+            padding: 0.5rem 1rem;
+            background-color: var(--red);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+        }
+
+        .logout-btn:hover {
+            opacity: 0.8;
+        }
+
+        .questions-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .question-item {
+            background-color: var(--secondary-dark);
+            border: 2px solid var(--sci-fi-blue);
+            padding: 1.5rem;
+            border-radius: 0;
+        }
+
+        .question-item.pending {
+            border-left: 4px solid var(--red);
+        }
+
+        .question-item.approved {
+            border-left: 4px solid var(--lime);
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .q-meta {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .q-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: var(--primary-dark);
+            border: 1px solid var(--sci-fi-purple);
+            color: var(--sci-fi-purple);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .q-text {
+            margin: 1rem 0;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .q-from {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .answer-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 217, 255, 0.2);
+        }
+
+        .answer-section textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary-dark);
+            border: 2px solid var(--sci-fi-blue);
+            color: var(--text-light);
+            font-family: 'Courier New', monospace;
+            min-height: 100px;
+            margin-bottom: 0.75rem;
+        }
+
+        .answer-section textarea:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--sci-fi-blue);
+            background-color: var(--primary-dark);
+            color: var(--sci-fi-blue);
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        button:hover {
+            background-color: var(--secondary-dark);
+            box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+        }
+
+        .approve-btn {
+            border-color: var(--lime);
+            color: var(--lime);
+        }
+
+        .delete-btn {
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+        .save-answer-btn {
+            border-color: var(--sci-fi-purple);
+            color: var(--sci-fi-purple);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h1>Admin Login</h1>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h1>Q&A Admin Panel</h1>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+        <div class="questions-list" id="questionsList">
+            <div class="empty-state">Loading questions...</div>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PASSWORD = 'clover30';
+        const CORRECT_HASH = 'clover30'; // In production, use proper hashing
+
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            
+            if (password === ADMIN_PASSWORD) {
+                localStorage.setItem('admin_logged_in', 'true');
+                showAdmin();
+            } else {
+                alert('Invalid password');
+            }
+        });
+
+        function showAdmin() {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            loadQuestions();
+        }
+
+        function logout() {
+            localStorage.removeItem('admin_logged_in');
+            location.reload();
+        }
+
+        function loadQuestions() {
+            const qnaData = JSON.parse(localStorage.getItem('rocketprep_qna') || '[]');
+            const listDiv = document.getElementById('questionsList');
+            
+            if (qnaData.length === 0) {
+                listDiv.innerHTML = '<div class="empty-state">No questions submitted yet</div>';
+                return;
+            }
+
+            listDiv.innerHTML = qnaData.map(item => `
+                <div class="question-item ${item.approved ? 'approved' : 'pending'}">
+                    <div class="q-header">
+                        <div>
+                            <div class="q-status">${item.approved ? 'Approved' : 'Pending'}</div>
+                            <div class="q-from"><strong>From:</strong> ${escapeHtml(item.name)} (${escapeHtml(item.email)})</div>
+                        </div>
+                        <div class="q-meta">${new Date(item.timestamp).toLocaleString()}</div>
+                    </div>
+                    <div class="q-text"><strong>Q:</strong> ${escapeHtml(item.question)}</div>
+                    <div class="answer-section">
+                        <textarea id="answer-${item.id}" placeholder="Type your answer here...">${item.answer || ''}</textarea>
+                        <div class="action-buttons">
+                            <button class="save-answer-btn" onclick="saveAnswer(${item.id})">Save Answer</button>
+                            ${!item.approved ? `<button class="approve-btn" onclick="approveQuestion(${item.id})">Approve</button>` : ''}
+                            <button class="delete-btn" onclick="deleteQuestion(${item.id})">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function approveQuestion(id) {
+            const qnaData = JSON.parse(localStorage.getItem('rocketprep_qna') || '[]');
+            const item = qnaData.find(q => q.id === id);
+            if (item) {
+                item.approved = true;
+                localStorage.setItem('rocketprep_qna', JSON.stringify(qnaData));
+                loadQuestions();
+            }
+        }
+
+        function saveAnswer(id) {
+            const qnaData = JSON.parse(localStorage.getItem('rocketprep_qna') || '[]');
+            const item = qnaData.find(q => q.id === id);
+            const answerText = document.getElementById(`answer-${id}`).value;
+            if (item) {
+                item.answer = answerText;
+                localStorage.setItem('rocketprep_qna', JSON.stringify(qnaData));
+                alert('Answer saved!');
+                loadQuestions();
+            }
+        }
+
+        function deleteQuestion(id) {
+            if (confirm('Are you sure you want to delete this question?')) {
+                let qnaData = JSON.parse(localStorage.getItem('rocketprep_qna') || '[]');
+                qnaData = qnaData.filter(q => q.id !== id);
+                localStorage.setItem('rocketprep_qna', JSON.stringify(qnaData));
+                loadQuestions();
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Check if already logged in
+        if (localStorage.getItem('admin_logged_in') === 'true') {
+            showAdmin();
+        }
+    </script>
+</body>
+</html>

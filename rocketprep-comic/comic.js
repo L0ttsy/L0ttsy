@@ -1,8 +1,7 @@
 // Flipbook State
 let currentPage = 0;
-const totalPages = 48; // 1 cover + 46 inside pages + 1 back cover
+const totalPages = 48;
 
-// DOM Elements
 const leftPageImg = document.getElementById('left-page-img');
 const rightPageImg = document.getElementById('right-page-img');
 const currentPageSpan = document.getElementById('current-page');
@@ -14,7 +13,6 @@ const qnaForm = document.getElementById('qna-form');
 const formMessage = document.getElementById('form-message');
 const qnaList = document.getElementById('qna-list');
 
-// Initialize
 document.addEventListener('DOMContentLoaded', () => {
     totalPagesSpan.textContent = totalPages;
     updatePages();
@@ -22,55 +20,49 @@ document.addEventListener('DOMContentLoaded', () => {
     attachEventListeners();
 });
 
-// Update page display
 function updatePages() {
-    // Page 0 (cover) - single page
     if (currentPage === 0) {
-        rightPageImg.style.display = 'flex';
         leftPageImg.style.display = 'none';
+        rightPageImg.style.display = 'flex';
+        rightPageImg.parentElement.classList.add('single-page');
+        leftPageImg.parentElement.classList.remove('single-page');
         rightPageImg.src = `pages/page-000.jpg`;
         currentPageSpan.textContent = '1';
     }
-    // Page 47 (back cover) - single page
     else if (currentPage === 47) {
-        rightPageImg.style.display = 'none';
         leftPageImg.style.display = 'flex';
+        rightPageImg.style.display = 'none';
+        leftPageImg.parentElement.classList.add('single-page');
+        rightPageImg.parentElement.classList.remove('single-page');
         leftPageImg.src = `pages/page-047.jpg`;
         currentPageSpan.textContent = '48';
     }
-    // Pages 1-46 (two-page spreads)
     else {
         leftPageImg.style.display = 'flex';
         rightPageImg.style.display = 'flex';
+        leftPageImg.parentElement.classList.remove('single-page');
+        rightPageImg.parentElement.classList.remove('single-page');
         leftPageImg.src = `pages/page-${String(currentPage).padStart(3, '0')}.jpg`;
         rightPageImg.src = `pages/page-${String(currentPage + 1).padStart(3, '0')}.jpg`;
         currentPageSpan.textContent = currentPage + 1;
     }
     
-    // Update slider
     pageSlider.value = currentPage;
-    
-    // Update button states
     updateButtonStates();
 }
 
-// Update button disabled states
 function updateButtonStates() {
     prevButton.disabled = currentPage === 0;
     nextButton.disabled = currentPage === totalPages - 1;
 }
 
-// Navigation functions
 function previousPage() {
     if (currentPage > 0) {
-        // If on back cover (47), go to page 46
         if (currentPage === 47) {
             currentPage = 46;
         } else if (currentPage === 1) {
-            // If on page 1, go to cover (0)
             currentPage = 0;
         } else {
-            // Otherwise go back 2 pages
             currentPage -= 2;
         }
         updatePages();
@@ -79,21 +71,17 @@ function previousPage() {
 
 function nextPage() {
     if (currentPage < totalPages - 1) {
-        // If on cover (0), go to page 1
         if (currentPage === 0) {
             currentPage = 1;
         } else if (currentPage === 46) {
-            // If on page 46, go to back cover (47)
             currentPage = 47;
         } else {
-            // Otherwise go forward 2 pages
             currentPage += 2;
         }
         updatePages();
     }
 }
 
-// Event Listeners
 function attachEventListeners() {
     prevButton.addEventListener('click', previousPage);
     nextButton.addEventListener('click', nextPage);
@@ -103,21 +91,17 @@ function attachEventListeners() {
         updatePages();
     });
     
-    // Keyboard navigation
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') previousPage();
         if (e.key === 'ArrowRight') nextPage();
     });
     
-    // Click on pages for navigation
     leftPageImg.addEventListener('click', previousPage);
     rightPageImg.addEventListener('click', nextPage);
     
-    // Q&A Form
     qnaForm.addEventListener('submit', submitQuestion);
 }
 
-// Q&A Functions
 function submitQuestion(e) {
     e.preventDefault();
     
@@ -130,32 +114,35 @@ function submitQuestion(e) {
         return;
     }
     
-    // Basic email validation
     if (!isValidEmail(email)) {
         showMessage('Please enter a valid email', 'error');
         return;
     }
     
-    // Store question in localStorage (since we don't have a backend)
-    const qnaData = getQnAData();
-    const newQuestion = {
-        id: Date.now(),
-        name,
-        email,
-        question,
-        answer: null,
-        timestamp: new Date().toLocaleString(),
-        approved: false // Questions need approval before showing
-    };
-    
-    qnaData.push(newQuestion);
-    localStorage.setItem('rocketprep_qna', JSON.stringify(qnaData));
-    
-    showMessage('✓ Question submitted! Thank you for your interest!', 'success');
-    qnaForm.reset();
-    
-    // Reload Q&A display
-    setTimeout(loadQnA, 500);
+    // Send to Formspree
+    fetch('https://formspree.io/f/mbjzjdwb', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            message: question,
+            _subject: 'New RocketPrep.Comic Question from ' + name
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            showMessage('✓ Question submitted! Thank you for your interest!', 'success');
+            qnaForm.reset();
+            setTimeout(loadQnA, 500);
+        } else {
+            showMessage('Error submitting question. Please try again.', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showMessage('Error submitting question. Please try again.', 'error');
+    });
 }
 
 function getQnAData() {
