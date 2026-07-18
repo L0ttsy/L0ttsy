@@ -1,6 +1,6 @@
 // Flipbook State
 let currentPage = 0;
-const totalPages = 48;
+const totalPages = 49; // Now 49 to account for empty left page before cover
 
 const leftPageImg = document.getElementById('left-page-img');
 const rightPageImg = document.getElementById('right-page-img');
@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function updatePages() {
     if (currentPage === 0) {
+        // Empty left page, cover on right
         leftPageImg.style.display = 'none';
         rightPageImg.style.display = 'flex';
         rightPageImg.parentElement.classList.add('single-page');
@@ -29,15 +30,17 @@ function updatePages() {
         rightPageImg.src = `pages/page-000.jpg`;
         currentPageSpan.textContent = '1';
     }
-    else if (currentPage === 47) {
+    else if (currentPage === 48) {
+        // Last page (page-047.jpg)
         leftPageImg.style.display = 'flex';
         rightPageImg.style.display = 'none';
         leftPageImg.parentElement.classList.add('single-page');
         rightPageImg.parentElement.classList.remove('single-page');
         leftPageImg.src = `pages/page-047.jpg`;
-        currentPageSpan.textContent = '48';
+        currentPageSpan.textContent = '49';
     }
     else {
+        // Two-page spread
         leftPageImg.style.display = 'flex';
         rightPageImg.style.display = 'flex';
         leftPageImg.parentElement.classList.remove('single-page');
@@ -58,8 +61,8 @@ function updateButtonStates() {
 
 function previousPage() {
     if (currentPage > 0) {
-        if (currentPage === 47) {
-            currentPage = 46;
+        if (currentPage === 48) {
+            currentPage = 47;
         } else if (currentPage === 1) {
             currentPage = 0;
         } else {
@@ -73,8 +76,8 @@ function nextPage() {
     if (currentPage < totalPages - 1) {
         if (currentPage === 0) {
             currentPage = 1;
-        } else if (currentPage === 46) {
-            currentPage = 47;
+        } else if (currentPage === 47) {
+            currentPage = 48;
         } else {
             currentPage += 2;
         }
@@ -119,6 +122,20 @@ function submitQuestion(e) {
         return;
     }
     
+    // Add to local storage immediately (no approval needed)
+    const qnaData = getQnAData();
+    const newQuestion = {
+        id: Date.now(),
+        name: name,
+        email: email,
+        question: question,
+        answer: '',
+        approved: true,
+        timestamp: new Date().toISOString()
+    };
+    qnaData.push(newQuestion);
+    localStorage.setItem('rocketprep_qna', JSON.stringify(qnaData));
+    
     // Send to Formspree
     fetch('https://formspree.io/f/mbjzjdwb', {
         method: 'POST',
@@ -136,12 +153,16 @@ function submitQuestion(e) {
             qnaForm.reset();
             setTimeout(loadQnA, 500);
         } else {
-            showMessage('Error submitting question. Please try again.', 'error');
+            showMessage('✓ Question saved locally!', 'success');
+            qnaForm.reset();
+            setTimeout(loadQnA, 500);
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        showMessage('Error submitting question. Please try again.', 'error');
+        showMessage('✓ Question saved locally!', 'success');
+        qnaForm.reset();
+        setTimeout(loadQnA, 500);
     });
 }
 
