@@ -137,7 +137,7 @@ function submitQuestion(e) {
     }
     
 // Send question to backend
-fetch("http://localhost:3000/questions", {
+fetch("https://charlotte-qna-backend-1.onrender.com", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -159,7 +159,7 @@ fetch("http://localhost:3000/questions", {
 }
 
 function getQnAData() {
-    return fetch("http://localhost:3000/questions")
+    return fetch("https://charlotte-qna-backend-1.onrender.com")
         .then(res => res.json());
 }
 
