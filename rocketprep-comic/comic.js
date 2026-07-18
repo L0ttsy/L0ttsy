@@ -1,6 +1,6 @@
 // Flipbook State
 let currentPage = 0;
-const totalPages = 49; // Now 49 to account for empty left page before cover
+const totalPages = 48; // Now 49 to account for empty left page before cover
 
 const leftPageImg = document.getElementById('left-page-img');
 const rightPageImg = document.getElementById('right-page-img');
@@ -30,14 +30,14 @@ function updatePages() {
         rightPageImg.src = `pages/page-000.jpg`;
         currentPageSpan.textContent = '1';
     }
-    else if (currentPage === 48) {
+    else if (currentPage === 47) {
         // Last page (page-047.jpg)
         leftPageImg.style.display = 'flex';
         rightPageImg.style.display = 'none';
         leftPageImg.parentElement.classList.add('single-page');
         rightPageImg.parentElement.classList.remove('single-page');
         leftPageImg.src = `pages/page-047.jpg`;
-        currentPageSpan.textContent = '49';
+        currentPageSpan.textContent = '48';
     }
     else {
         // Two-page spread
@@ -61,8 +61,8 @@ function updateButtonStates() {
 
 function previousPage() {
     if (currentPage > 0) {
-        if (currentPage === 48) {
-            currentPage = 47;
+        if (currentPage === 47) {
+            currentPage = 46;
         } else if (currentPage === 1) {
             currentPage = 0;
         } else {
@@ -122,19 +122,6 @@ function submitQuestion(e) {
         return;
     }
     
-    // Add to local storage immediately (no approval needed)
-    const qnaData = getQnAData();
-    const newQuestion = {
-        id: Date.now(),
-        name: name,
-        email: email,
-        question: question,
-        answer: '',
-        approved: true,
-        timestamp: new Date().toISOString()
-    };
-    qnaData.push(newQuestion);
-    localStorage.setItem('rocketprep_qna', JSON.stringify(qnaData));
     
     // Send to Formspree
     fetch('https://formspree.io/f/mbjzjdwb', {
@@ -153,9 +140,8 @@ function submitQuestion(e) {
             qnaForm.reset();
             setTimeout(loadQnA, 500);
         } else {
-            showMessage('✓ Question saved locally!', 'success');
-            qnaForm.reset();
-            setTimeout(loadQnA, 500);
+             showMessage('Error submitting question. Please try again.', 'error');
+            
         }
     })
     .catch(error => {
