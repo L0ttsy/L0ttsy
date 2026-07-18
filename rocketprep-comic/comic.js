@@ -136,53 +136,55 @@ function submitQuestion(e) {
         return;
     }
     
-    // Store question in localStorage (since we don't have a backend)
-    const qnaData = getQnAData();
-    const newQuestion = {
-        id: Date.now(),
+// Send question to backend
+fetch("http://localhost:3000/questions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
         name,
         email,
-        question,
-        answer: null,
-        timestamp: new Date().toLocaleString(),
-        approved: false // Questions need approval before showing
-    };
-    
-    qnaData.push(newQuestion);
-    localStorage.setItem('rocketprep_qna', JSON.stringify(qnaData));
-    
+        question
+    })
+})
+.then(res => res.json())
+.then(() => {
     showMessage('✓ Question submitted! Thank you for your interest!', 'success');
     qnaForm.reset();
-    
-    // Reload Q&A display
     setTimeout(loadQnA, 500);
+})
+.catch(() => {
+    showMessage('Error submitting question. Please try again.', 'error');
+});
+
 }
 
 function getQnAData() {
-    const data = localStorage.getItem('rocketprep_qna');
-    return data ? JSON.parse(data) : [];
+    return fetch("http://localhost:3000/questions")
+        .then(res => res.json());
 }
 
 function loadQnA() {
-    const qnaData = getQnAData();
-    const approvedQnA = qnaData.filter(item => item.approved);
-    
-    if (approvedQnA.length === 0) {
-        qnaList.innerHTML = '<div class="empty-state">No questions yet. Be the first to ask!</div>';
-        return;
-    }
-    
-    qnaList.innerHTML = approvedQnA
-        .reverse()
-        .map(item => `
-            <div class="qna-item">
-                <div class="qna-question">Q: ${escapeHtml(item.question)}</div>
-                <div class="qna-author">— ${escapeHtml(item.name)}</div>
-                ${item.answer ? `<div class="qna-answer">A: ${escapeHtml(item.answer)}</div>` : '<div class="qna-answer"><em>Answer coming soon...</em></div>'}
-            </div>
-        `)
-        .join('');
+    getQnAData().then(qnaData => {
+        const approvedQnA = qnaData.filter(item => item.approved);
+
+        if (approvedQnA.length === 0) {
+            qnaList.innerHTML = '<div class="empty-state">No questions yet. Be the first to ask!</div>';
+            return;
+        }
+
+        qnaList.innerHTML = approvedQnA
+            .reverse()
+            .map(item => `
+                <div class="qna-item">
+                    <div class="qna-question">Q: ${escapeHtml(item.question)}</div>
+                    <div class="qna-author">— ${escapeHtml(item.name)}</div>
+                    ${item.answer ? `<div class="qna-answer">A: ${escapeHtml(item.answer)}</div>` : '<div class="qna-answer"><em>Answer coming soon...</em></div>'}
+                </div>
+            `)
+            .join('');
+    });
 }
+
 
 function showMessage(text, type) {
     formMessage.textContent = text;
