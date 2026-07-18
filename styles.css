@@ -326,7 +326,7 @@ footer {
     .duck-img {
         width: 100px;
         height: auto;
-        object-fit:contain;
+        object-fit: contain;
         
     }
 
