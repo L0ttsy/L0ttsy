@@ -306,10 +306,12 @@
             location.reload();
         }
 
-        function loadQuestions() {
-            const qnaData = JSON.parse(localStorage.getItem('rocketprep_qna') || '[]');
+function loadQuestions() {
+    fetch("http://localhost:3000/questions")
+        .then(res => res.json())
+        .then(qnaData => {
             const listDiv = document.getElementById('questionsList');
-            
+
             if (qnaData.length === 0) {
                 listDiv.innerHTML = '<div class="empty-state">No questions submitted yet</div>';
                 return;
@@ -335,38 +337,47 @@
                     </div>
                 </div>
             `).join('');
+        });
+}
+
+
+   function approveQuestion(id) {
+    fetch("http://localhost:3000/approve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id })
+    })
+    .then(() => loadQuestions());
+}
+
         }
 
-        function approveQuestion(id) {
-            const qnaData = JSON.parse(localStorage.getItem('rocketprep_qna') || '[]');
-            const item = qnaData.find(q => q.id === id);
-            if (item) {
-                item.approved = true;
-                localStorage.setItem('rocketprep_qna', JSON.stringify(qnaData));
-                loadQuestions();
-            }
-        }
+function saveAnswer(id) {
+    const answerText = document.getElementById(`answer-${id}`).value;
 
-        function saveAnswer(id) {
-            const qnaData = JSON.parse(localStorage.getItem('rocketprep_qna') || '[]');
-            const item = qnaData.find(q => q.id === id);
-            const answerText = document.getElementById(`answer-${id}`).value;
-            if (item) {
-                item.answer = answerText;
-                localStorage.setItem('rocketprep_qna', JSON.stringify(qnaData));
-                alert('Answer saved!');
-                loadQuestions();
-            }
-        }
+    fetch("http://localhost:3000/answer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, answer: answerText })
+    })
+    .then(() => {
+        alert('Answer saved!');
+        loadQuestions();
+    });
+}
 
-        function deleteQuestion(id) {
-            if (confirm('Are you sure you want to delete this question?')) {
-                let qnaData = JSON.parse(localStorage.getItem('rocketprep_qna') || '[]');
-                qnaData = qnaData.filter(q => q.id !== id);
-                localStorage.setItem('rocketprep_qna', JSON.stringify(qnaData));
-                loadQuestions();
-            }
-        }
+
+function deleteQuestion(id) {
+    if (confirm('Are you sure you want to delete this question?')) {
+        fetch("http://localhost:3000/delete", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id })
+        })
+        .then(() => loadQuestions());
+    }
+}
+
 
         function escapeHtml(text) {
             const div = document.createElement('div');
