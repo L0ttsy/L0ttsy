@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RocketPrep.Comic - Flipbook Reader</title>
-    <link rel="stylesheet" href="comic.css?v=2">
+    <link rel="stylesheet" href="comic.css?v=3">
 </head>
 <body>
     <div class="comic-container">
@@ -13,7 +13,7 @@
             <a href="../index.html" class="back-button">← Back to Home</a>
             <h1><span class="rocket-prep-font">RocketPrep.Comic</span> </h1>
             <div class="page-counter">
-                <span id="current-page">1</span> / <span id="total-pages">48</span>
+                <span id="current-page">1</span> / <span id="total-pages">49</span>
             </div>
         </header>
 
@@ -43,68 +43,45 @@
             <button id="prev-button" class="nav-button">← Previous</button>
             
             <div class="slider-container">
-                <input type="range" id="page-slider" min="0" max="47" value="0" class="page-slider">
+                <input type="range" id="page-slider" min="0" max="48" value="0" class="page-slider">
             </div>
             
             <button id="next-button" class="nav-button">Next →</button>
         </div>
 
-        <!-- Navigation Info -->
-        <div class="nav-info">
-            <p>📖 Use arrow buttons or keyboard arrows to navigate. Drag the slider to jump.</p>
-        </div>
-    </div>
-
-    <!-- Q&A Section -->
-    <section class="qna-section">
-        <h2>Questions & Answers 🦆</h2>
-        <p>Have a question about <span class="rocket-prep-font">RocketPrep.Comic</span>? Submit it below!</p>
-        
-        <div class="qna-container">
-            <!-- Question Submission Form -->
-            <div class="qna-form">
+        <!-- Community Questions Section -->
+        <section class="qna-section">
+            <h2>Community Questions</h2>
+            
+            <!-- Q&A Form -->
+            <div class="qna-form-container">
                 <h3>Ask a Question</h3>
                 <form id="qna-form">
-                    <input 
-                        type="text" 
-                        id="name" 
-                        placeholder="Your Name" 
-                        required
-                        class="form-input"
-                    >
-                    <input 
-                        type="email" 
-                        id="email" 
-                        placeholder="Your Email" 
-                        required
-                        class="form-input"
-                    >
-                    <textarea 
-                        id="question" 
-                        placeholder="Your Question..." 
-                        required
-                        class="form-textarea"
-                    ></textarea>
-                    <button type="submit" class="submit-button">Submit Question</button>
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="question">Question:</label>
+                        <textarea id="question" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit Question</button>
+                    <div id="form-message" class="form-message"></div>
                 </form>
-                <div id="form-message" class="form-message"></div>
             </div>
-
-            <!-- Q&A Display -->
-            <div class="qna-display">
-                <h3>Community Questions</h3>
-                <div id="qna-list" class="qna-list">
-                    <p class="empty-state">No questions yet. Be the first to ask!</p>
-                </div>
+            
+            <!-- Q&A List -->
+            <div class="qna-list-container">
+                <h3>Questions & Answers</h3>
+                <div id="qna-list" class="qna-list"></div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>Made with 🦆 by L0ttsy | <span class="rocket-prep-font">RocketPrep.Comic</span></p>
-    </footer>
-
-    <script src="comic.js?v=2"></script>
+    <script src="comic.js"></script>
 </body>
 </html>
