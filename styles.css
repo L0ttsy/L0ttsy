@@ -152,7 +152,7 @@ body {
     border-radius: 0 !important;
     border: none !important;
     animation: duck-float 4s ease-in-out infinite;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    filter: none !important;
     transition: transform 0.3s ease;
 }
 
