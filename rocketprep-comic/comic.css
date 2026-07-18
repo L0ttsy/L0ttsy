@@ -185,7 +185,7 @@ body {
     border-radius: 2px;
     overflow: hidden;
     box-shadow: 0 8px 20px rgba(0, 217, 255, 0.2);
-    aspect-ratio: 9 / 12;
+    aspect-ratio: auto;
     display: flex;
     align-items: center;
     justify-content: center;
